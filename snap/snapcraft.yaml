@@ -1,0 +1,94 @@
+name: boxy-svg
+version: "3.81.0"
+summary: Scalable Vector Graphics (SVG) editor.
+description: |
+  Boxy SVG project goal is to create the best tool for editing SVG files.
+  For beginners as well as for professional web designers and web developers.
+  On any device and operating system.
+license: Proprietary
+base: core20
+grade: stable
+confinement: strict
+compression: lzo
+architectures:
+  - build-on: amd64
+    run-on: amd64
+  - build-on: arm64
+    run-on: arm64
+  - build-on: armhf
+    run-on: armhf
+parts:
+  electron-app:
+    plugin: dump
+    source: https://firebasestorage.googleapis.com/v0/b/boxy-svg.appspot.com/o/linux%2Fapp-3.81.0.zip?alt=media
+    source-checksum: md5/9aef6283627d2d2bfe82b94f665863e8
+    source-type: zip
+    override-build: |
+      # Bugfix: https://forum.snapcraft.io/t/problems-with-remote-build/24373/2
+      if [ -z ${http_proxy+x} ];
+      then
+        echo "Not using proxy"
+      else
+        echo "Using proxy"
+        export ELECTRON_GET_USE_PROXY=1
+        export GLOBAL_AGENT_HTTP_PROXY="${http_proxy}"
+        export GLOBAL_AGENT_HTTPS_PROXY="${http_proxy}"
+        npm config set proxy $http_proxy
+        npm config set https-proxy $https_proxy
+      fi
+
+      # Bugfix: Need to move the unarchived files manually because `source-subdir: app` does not seem to work
+      mv ./app/* .
+
+      # Install electron-builder and other dependencies from NPM
+      npm install
+      npm --prefix ./src install
+
+      # Generate linux-unpacked directory containing Electron binaries
+      if [ ${SNAP_ARCH} = "armhf" ];
+      then
+        ./node_modules/.bin/electron-builder --armv7l
+      else
+        ./node_modules/.bin/electron-builder
+      fi
+
+      # Copy over the linux-unpacked directory contents
+      mkdir -p $SNAPCRAFT_PART_INSTALL/opt/boxy-svg || true
+      cp -ar ./dist/*-unpacked/* $SNAPCRAFT_PART_INSTALL/opt/boxy-svg/
+    build-snaps:
+      - node/14/stable
+    build-packages:
+      - build-essential
+      - git
+      - libfontconfig-dev
+    stage-packages:
+      - libappindicator3-1
+      - libxss1
+      - libnspr4
+      - libnss3
+      - libglu1-mesa
+      - libnotify4
+      - libnotify-bin
+      - libpulse0
+apps:
+  boxy-svg:
+    command: opt/boxy-svg/boxy-svg --no-sandbox
+    plugs:
+      - desktop
+      - desktop-legacy
+      - home
+      - removable-media
+      - x11
+      - unity7
+      - wayland
+      - browser-support
+      - network
+      - opengl
+      - audio-playback
+    extensions: [gnome-3-38]
+    environment:
+      DISABLE_WAYLAND: 1
+      GTK_USE_PORTAL: 1
+      TMPDIR: ${XDG_RUNTIME_DIR}
+      PATH: ${SNAP}/usr/sbin:${SNAP}/usr/bin:${SNAP}/sbin:${SNAP}/bin:${PATH}
+      SNAP_DESKTOP_RUNTIME: ${SNAP}/gnome-platform

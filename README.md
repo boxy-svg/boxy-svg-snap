@@ -1,2 +1,2 @@
-# boxy-svg-snap
-Boxy SVG Linux snap package metadata
+# README
+This repository contains extra metadata needed to build Boxy SVG Linux snap package. It is meant to be used exclusively by [Snapcraft.io build system](https://snapcraft.io/build). Please use the [Snap Store](https://snapcraft.io/boxy-svg) to get the actual package.
