@@ -21,7 +21,7 @@ parts:
   electron-app:
     plugin: dump
     source: https://firebasestorage.googleapis.com/v0/b/boxy-svg.appspot.com/o/linux%2Fapp-3.81.0.zip?alt=media
-    source-checksum: md5/9aef6283627d2d2bfe82b94f665863e8
+    source-checksum: sha256/217bef43f54b9833adbe9397eee2418337f4237fe3cbee87e8c20dd0b19744ab
     source-type: zip
     override-build: |
       # Bugfix: https://forum.snapcraft.io/t/problems-with-remote-build/24373/2
@@ -42,7 +42,7 @@ parts:
 
       # Install electron-builder and other dependencies from NPM
       npm install
-      npm --prefix ./src install
+      npm --prefix ./electron install
 
       # Generate linux-unpacked directory containing Electron binaries
       if [ ${SNAP_ARCH} = "armhf" ];
