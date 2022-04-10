@@ -1,5 +1,5 @@
 name: boxy-svg
-version: "3.81.0"
+version: "3.82.0"
 summary: Scalable Vector Graphics (SVG) editor.
 description: |
   Boxy SVG project goal is to create the best tool for editing SVG files.
@@ -20,8 +20,8 @@ architectures:
 parts:
   electron-app:
     plugin: dump
-    source: https://firebasestorage.googleapis.com/v0/b/boxy-svg.appspot.com/o/linux%2Fapp-3.81.0.zip?alt=media
-    source-checksum: sha256/217bef43f54b9833adbe9397eee2418337f4237fe3cbee87e8c20dd0b19744ab
+    source: https://firebasestorage.googleapis.com/v0/b/boxy-svg.appspot.com/o/linux%2Fapp-3.82.0.zip?alt=media
+    source-checksum: sha256/c5427d9ae3b8df8125940914580472a43564b342e0eeed05106e755bc3002ae3
     source-type: zip
     override-build: |
       # Bugfix: https://forum.snapcraft.io/t/problems-with-remote-build/24373/2
