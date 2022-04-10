@@ -21,7 +21,7 @@ parts:
   electron-app:
     plugin: dump
     source: https://firebasestorage.googleapis.com/v0/b/boxy-svg.appspot.com/o/linux%2Fapp-3.82.0.zip?alt=media
-    source-checksum: sha256/c5427d9ae3b8df8125940914580472a43564b342e0eeed05106e755bc3002ae3
+    source-checksum: sha256/51da8d2a9c124440bc21031078fb14bd7986f14c0af91541326af61314511539
     source-type: zip
     override-build: |
       # Bugfix: https://forum.snapcraft.io/t/problems-with-remote-build/24373/2
