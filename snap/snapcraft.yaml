@@ -1,10 +1,5 @@
 name: boxy-svg
-version: "3.82.0"
-summary: Scalable Vector Graphics (SVG) editor.
-description: |
-  Boxy SVG project goal is to create the best tool for editing SVG files.
-  For beginners as well as for professional web designers and web developers.
-  On any device and operating system.
+adopt-info: electron-app
 license: Proprietary
 base: core20
 grade: stable
@@ -20,9 +15,10 @@ architectures:
 parts:
   electron-app:
     plugin: dump
-    source: https://firebasestorage.googleapis.com/v0/b/boxy-svg.appspot.com/o/linux%2Fapp-3.82.0.zip?alt=media
-    source-checksum: sha256/51da8d2a9c124440bc21031078fb14bd7986f14c0af91541326af61314511539
+    source: https://firebasestorage.googleapis.com/v0/b/boxy-svg.appspot.com/o/linux%2Fapp-3.82.1.zip?alt=media
+    source-checksum: sha256/0eb0b2bf1840e81d519afb1c84d0635a34f3be4a671ce70d7da03438e65b38b4
     source-type: zip
+    parse-info: [app/metadata/com.boxy_svg.BoxySVG.appdata.xml]
     override-build: |
       # Bugfix: https://forum.snapcraft.io/t/problems-with-remote-build/24373/2
       if [ -z ${http_proxy+x} ];
@@ -38,7 +34,7 @@ parts:
       fi
 
       # Bugfix: Need to move the unarchived files manually because `source-subdir: app` does not seem to work
-      mv ./app/* .
+      cp -r ./app/* .
 
       # Install electron-builder and other dependencies from NPM
       npm install
@@ -73,6 +69,7 @@ parts:
 apps:
   boxy-svg:
     command: opt/boxy-svg/boxy-svg --no-sandbox
+    common-id: com.boxy_svg.BoxySVG
     plugs:
       - desktop
       - desktop-legacy
