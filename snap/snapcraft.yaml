@@ -17,7 +17,7 @@ parts:
   electron-app:
     plugin: dump
     source: https://firebasestorage.googleapis.com/v0/b/boxy-svg.appspot.com/o/linux%2Fapp-3.83.1.zip?alt=media
-    source-checksum: sha256/a13393c71c1a06d4317170fa2ba09f2070855953fa23933cdc7409931e0ba942
+    source-checksum: sha256/6dbd1d06a6405fe9a7a51b36ee35adb90845354f30cdd6b38e635e437978883e
     source-type: zip
     parse-info: [app/metadata/com.boxy_svg.BoxySVG.appdata.xml]
     override-build: |
